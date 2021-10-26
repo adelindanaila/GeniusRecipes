@@ -116,7 +116,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                vertical: Constants.spacing / 2,
+                vertical: Constants.spacing / 1.5,
                 horizontal: Constants.spacing,
               ),
               child: Column(
@@ -143,74 +143,93 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     },
                     shrinkWrap: true,
                     primary: false,
-                    padding: EdgeInsets.only(top: Constants.spacing),
+                    padding: EdgeInsets.only(top: Constants.spacing / 1.5),
                     itemCount: 5,
-                    itemBuilder: (ctx, i) => (Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Constants.shadowColor.withOpacity(0.5),
-                            spreadRadius: 0.0,
-                            blurRadius: 5,
-                            offset: const Offset(2.5, 2.5),
-                          ),
-                        ],
+                    itemBuilder: (ctx, i) => TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/recipe');
+                      },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 180,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              image: const DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/vegetarian.jpeg',
+                      child: (Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Constants.shadowColor.withOpacity(0.5),
+                              spreadRadius: 0.0,
+                              blurRadius: 5,
+                              offset: const Offset(2.5, 2.5),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 180,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/vegetarian.jpeg',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                          0.0,
+                                          Constants.spacing / 2,
+                                          Constants.spacing / 2,
+                                          0.0,
+                                        ),
+                                        child: ButtonIcon(
+                                          image: 'assets/images/heart.png',
+                                          onPressed: () {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                fit: BoxFit.cover,
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(Constants.spacing / 2),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Chicken Hawaiian',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                      color: Constants.textColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Chicken, cheese and pineapple',
+                                    style: TextStyle(
+                                      color: Constants.grayColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                    0.0,
-                                    Constants.spacing / 2,
-                                    Constants.spacing / 2,
-                                    0.0,
-                                  ),
-                                  child: ButtonIcon(
-                                    image: 'assets/images/heart.png',
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(Constants.spacing / 2),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Chicken Hawaiian',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                Text('Chicken, cheese and pineapple'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
+                          ],
+                        ),
+                      )),
+                    ),
                   ),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geniusrecipes/utils/constants.dart';
 import 'package:geniusrecipes/screens/home_screen.dart';
 import 'package:geniusrecipes/screens/category_screen.dart';
+import 'package:geniusrecipes/screens/recipe_screen.dart';
 
 void main() {
   runApp(const GeniusRecipes());
@@ -26,6 +27,7 @@ class GeniusRecipes extends StatelessWidget {
       routes: {
         '/': (context) => const HomeScreen(),
         '/category': (context) => const CategoryScreen(),
+        '/recipe': (context) => RecipeScreen(),
       },
     );
   }

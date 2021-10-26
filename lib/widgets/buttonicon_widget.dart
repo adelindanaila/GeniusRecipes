@@ -21,7 +21,7 @@ class ButtonIcon extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(50.0),
         boxShadow: [
           BoxShadow(
             color: Constants.shadowColor.withOpacity(0.5),
@@ -39,7 +39,7 @@ class ButtonIcon extends StatelessWidget {
           ),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(50.0),
             ),
           ),
         ),
