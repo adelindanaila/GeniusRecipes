@@ -27,7 +27,7 @@ class CategoryWidget extends StatelessWidget {
             name,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: Constants.spacing,
+              fontSize: 22.0,
               fontWeight: FontWeight.bold,
               color: Colors.white,
               shadows: <Shadow>[

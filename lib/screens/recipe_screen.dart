@@ -48,7 +48,7 @@ class RecipeScreen extends StatelessWidget {
                 ),
                 Positioned(
                   child: Container(
-                    height: Constants.spacing / 2,
+                    height: Constants.spacing,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(

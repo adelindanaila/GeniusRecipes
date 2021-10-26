@@ -27,7 +27,7 @@ class GeniusRecipes extends StatelessWidget {
       routes: {
         '/': (context) => const HomeScreen(),
         '/category': (context) => const CategoryScreen(),
-        '/recipe': (context) => RecipeScreen(),
+        '/recipe': (context) => const RecipeScreen(),
       },
     );
   }

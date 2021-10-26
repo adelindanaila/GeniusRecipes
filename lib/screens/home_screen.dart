@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geniusrecipes/utils/constants.dart';
+import 'package:geniusrecipes/utils/categories_data.dart';
 import 'package:geniusrecipes/widgets/buttonicon_widget.dart';
 import 'package:geniusrecipes/widgets/category_widget.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -62,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                   Constants.spacing,
                   0.0,
                   Constants.spacing,
-                  Constants.spacing,
+                  0.0,
                 ),
                 child: Column(
                   children: [
@@ -97,109 +99,28 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: Constants.spacing / 2),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: Constants.spacing / 3),
-                          height: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          width: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          child: const CategoryWidget(
-                            name: 'Meat',
-                            image: 'assets/images/meat.jpeg',
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: Constants.spacing / 3),
-                          height: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          width: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          child: const CategoryWidget(
-                            name: 'Vegetarian',
-                            image: 'assets/images/vegetarian.jpeg',
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: Constants.spacing / 2),
-                          height: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          width: size.width - (Constants.spacing * 2.0),
-                          child: const CategoryWidget(
-                            name: 'Vegan',
-                            image: 'assets/images/vegan.jpeg',
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  0.0,
-                                  Constants.spacing / 2,
-                                  Constants.spacing / 3,
-                                  0.0),
-                              height: (size.width / 2) -
-                                  Constants.spacing -
-                                  (Constants.spacing / 3),
-                              width: (size.width / 2) -
-                                  Constants.spacing -
-                                  (Constants.spacing / 3),
-                              child: const CategoryWidget(
-                                name: 'Fish',
-                                image: 'assets/images/fish.jpeg',
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  0.0,
-                                  Constants.spacing / 2,
-                                  Constants.spacing / 3,
-                                  0.0),
-                              height: (size.width / 2) -
-                                  Constants.spacing -
-                                  (Constants.spacing / 3),
-                              width: (size.width / 2) -
-                                  Constants.spacing -
-                                  (Constants.spacing / 3),
-                              child: const CategoryWidget(
-                                name: 'Asian',
-                                image: 'assets/images/asian.jpeg',
-                              ),
-                            )
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(Constants.spacing / 3,
-                              Constants.spacing / 2, 0.0, 0.0),
-                          height: size.width - (Constants.spacing * 2),
-                          width: (size.width / 2) -
-                              Constants.spacing -
-                              (Constants.spacing / 3),
-                          child: const CategoryWidget(
-                            name: 'Seafood',
-                            image: 'assets/images/seafood.jpeg',
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
+              ),
+            ),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                vertical: Constants.spacing / 2,
+                horizontal: Constants.spacing,
+              ),
+              sliver: SliverStaggeredGrid.countBuilder(
+                crossAxisCount: 4,
+                itemCount: categoriesList.length,
+                itemBuilder: (context, index) => CategoryWidget(
+                  name: categoriesList[index].title,
+                  image: categoriesList[index].preview,
+                ),
+                staggeredTileBuilder: (int index) => StaggeredTile.count(
+                  categoriesList[index].crossAxisCellCount,
+                  categoriesList[index].mainAxisCellCount,
+                ),
+                mainAxisSpacing: Constants.spacing / 3,
+                crossAxisSpacing: Constants.spacing / 3,
               ),
             ),
           ],
