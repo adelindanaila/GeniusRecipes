@@ -1,5 +1,6 @@
 ## About
 Find recipes by any ingredient or cuisine using Spoonacular API.
+
 *This is a side project, the purpose of this app is to learn and develop Flutter.*
 
 ## Setup
