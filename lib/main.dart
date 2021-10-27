@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geniusrecipes/utils/constants.dart';
 import 'package:geniusrecipes/screens/home_screen.dart';
 import 'package:geniusrecipes/screens/category_screen.dart';
 import 'package:geniusrecipes/screens/recipe_screen.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const GeniusRecipes());
 }
 
@@ -24,9 +26,21 @@ class GeniusRecipes extends StatelessWidget {
           bodyText2: TextStyle(color: Constants.textColor, fontSize: 14.0),
         ),
       ),
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/category':
+            return MaterialPageRoute(
+              builder: (context) =>
+                  CategoryScreen(settings.arguments), // passing arguments
+              settings: settings,
+            );
+          default:
+            throw Exception('Unknown route');
+        }
+      },
       routes: {
         '/': (context) => const HomeScreen(),
-        '/category': (context) => const CategoryScreen(),
+        // '/category': (context) => const CategoryScreen(),
         '/recipe': (context) => const RecipeScreen(),
       },
     );

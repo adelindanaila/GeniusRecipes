@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:geniusrecipes/utils/constants.dart';
 
 class CategoryWidget extends StatelessWidget {
-  final String name;
-  final String image;
+  final String title;
+  final String subtitle;
+  final String preview;
+  final String background;
+  final Color color;
+  final String query;
 
-  const CategoryWidget({Key? key, required this.name, required this.image})
+  const CategoryWidget({Key? key, required this.title, required this.subtitle, required this.preview, required this.background, required this.color, required this.query })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/category');
+        Navigator.pushNamed(context, '/category', arguments: {
+          'title': title,
+          'subtitle': subtitle,
+          'background': background,
+          'color': color,
+          'query': query
+        });
       },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
@@ -20,11 +29,11 @@ class CategoryWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage(preview), fit: BoxFit.cover),
         ),
         child: Center(
           child: Text(
-            name,
+            title,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 22.0,

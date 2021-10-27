@@ -112,8 +112,12 @@ class HomeScreen extends StatelessWidget {
                 crossAxisCount: 4,
                 itemCount: categoriesList.length,
                 itemBuilder: (context, index) => CategoryWidget(
-                  name: categoriesList[index].title,
-                  image: categoriesList[index].preview,
+                  title: categoriesList[index].title,
+                  subtitle: categoriesList[index].subtitle,
+                  preview: categoriesList[index].preview,
+                  background: categoriesList[index].background,
+                  color: categoriesList[index].color,
+                  query: categoriesList[index].query,
                 ),
                 staggeredTileBuilder: (int index) => StaggeredTile.count(
                   categoriesList[index].crossAxisCellCount,

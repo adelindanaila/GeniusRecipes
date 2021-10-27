@@ -1,20 +1,57 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:geniusrecipes/utils/constants.dart';
 import 'package:geniusrecipes/widgets/buttonicon_widget.dart';
+import 'package:geniusrecipes/widgets/recipe_widget.dart';
+
+Future<List<Data>> fetchData(query) async {
+  final response = await http.get(Uri.parse(
+      'https://api.spoonacular.com/recipes/complexSearch?apiKey=${dotenv.env['API_KEY']}&${query}'));
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body)['results'];
+    return jsonResponse.map((data) => new Data.fromJson(data)).toList();
+  } else {
+    throw Exception('Unexpected error occurred!');
+  }
+}
+
+class Data {
+  final int id;
+  final String title;
+  final String image;
+
+  Data({required this.id, required this.title, required this.image});
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      id: json['id'],
+      title: json['title'],
+      image: json['image'],
+    );
+  }
+}
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  final arguments;
+  const CategoryScreen(this.arguments, {Key? key}) : super(key: key);
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  late Future<List<Data>> futureData;
   final double kExpandedHeight = 200.0;
   ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
+    futureData = fetchData(widget.arguments['query']);
     _scrollController = ScrollController()..addListener(() => setState(() {}));
     super.initState();
   }
@@ -41,6 +78,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
@@ -53,7 +93,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               duration: const Duration(milliseconds: 300),
               opacity: _titleOpacity,
               child: Text(
-                'Vegetarian',
+                arguments['title'],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18.0,
@@ -64,11 +104,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
             centerTitle: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/category-vegetarian.png',
-                    ),
+                    image: AssetImage(arguments['background']),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -80,7 +118,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Meat',
+                        arguments['title'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 42.0,
@@ -88,7 +126,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ),
                       ),
                       Text(
-                        'love',
+                        arguments['subtitle'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 42.0,
@@ -119,119 +157,68 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 vertical: Constants.spacing / 1.5,
                 horizontal: Constants.spacing,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'more than 80\nrecipes',
-                        style: TextStyle(
-                          color: Constants.grayColor,
-                        ),
-                      ),
-                      ButtonIcon(
-                        image: 'assets/images/search-primary.png',
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: Constants.spacing / 1.5);
-                    },
-                    shrinkWrap: true,
-                    primary: false,
-                    padding: EdgeInsets.only(top: Constants.spacing / 1.5),
-                    itemCount: 5,
-                    itemBuilder: (ctx, i) => TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/recipe');
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: (Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Constants.shadowColor.withOpacity(0.5),
-                              spreadRadius: 0.0,
-                              blurRadius: 5,
-                              offset: const Offset(2.5, 2.5),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              child: FutureBuilder<List<Data>>(
+                future: futureData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Data>? data = snapshot.data;
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 180,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    image: const DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/vegetarian.jpeg',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                          0.0,
-                                          Constants.spacing / 2,
-                                          Constants.spacing / 2,
-                                          0.0,
-                                        ),
-                                        child: ButtonIcon(
-                                          image: 'assets/images/heart.png',
-                                          onPressed: () {},
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(Constants.spacing / 2),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Chicken Hawaiian',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0,
-                                      color: Constants.textColor,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Chicken, cheese and pineapple',
-                                    style: TextStyle(
-                                      color: Constants.grayColor,
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              'more than ${data!.length.floor()}\nrecipes',
+                              style: TextStyle(
+                                color: Constants.grayColor,
                               ),
                             ),
+                            ButtonIcon(
+                              image: 'assets/images/search-primary.png',
+                              onPressed: () {},
+                            ),
                           ],
                         ),
-                      )),
+                        ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(height: Constants.spacing / 1.5);
+                            },
+                            shrinkWrap: true,
+                            primary: false,
+                            padding:
+                                EdgeInsets.only(top: Constants.spacing / 1.5),
+                            itemCount: data!.length,
+                            itemBuilder: (
+                              BuildContext context,
+                              int index,
+                            ) {
+                              return RecipeWidget(
+                                id: data[index].id,
+                                title: data[index].title,
+                                image: data[index].image,
+                              );
+                            }),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+                  // By default show a loading spinner.
+                  return SizedBox(
+                    height:
+                        size.height - kExpandedHeight - Constants.spacing * 4,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Constants.primaryColor,
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ),

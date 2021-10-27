@@ -87,7 +87,7 @@ const categoriesList = [
     title: "Vegetarian",
     subtitle: "love",
     preview: "assets/images/categories/previews/vegetarian.jpg",
-    background: "assets/images/categories/backgrounds/vegetarian.jpg",
+    background: "assets/images/categories/backgrounds/vegetarian.jpeg",
     color: Color.fromRGBO(112, 95, 124, 1),
     query: "diet=vegetarian",
     crossAxisCellCount: 2,
