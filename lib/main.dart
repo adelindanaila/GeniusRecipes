@@ -34,14 +34,18 @@ class GeniusRecipes extends StatelessWidget {
                   CategoryScreen(settings.arguments), // passing arguments
               settings: settings,
             );
+          case '/recipe':
+            return MaterialPageRoute(
+              builder: (context) =>
+                  RecipeScreen(settings.arguments), // passing arguments
+              settings: settings,
+            );
           default:
             throw Exception('Unknown route');
         }
       },
       routes: {
         '/': (context) => const HomeScreen(),
-        // '/category': (context) => const CategoryScreen(),
-        '/recipe': (context) => const RecipeScreen(),
       },
     );
   }

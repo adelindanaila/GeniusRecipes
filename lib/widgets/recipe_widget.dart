@@ -15,7 +15,10 @@ class RecipeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/recipe', arguments: id);
+        Navigator.pushNamed(context, '/recipe', arguments: {
+          'id': id,
+          'image': image,
+        });
       },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,

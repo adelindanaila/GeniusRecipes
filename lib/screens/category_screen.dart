@@ -11,7 +11,7 @@ import 'package:geniusrecipes/widgets/recipe_widget.dart';
 
 Future<List<Data>> fetchData(query) async {
   final response = await http.get(Uri.parse(
-      'https://api.spoonacular.com/recipes/complexSearch?apiKey=${dotenv.env['API_KEY']}&${query}'));
+      '${dotenv.env['API_URL']}/complexSearch?apiKey=${dotenv.env['API_KEY']}&${query}'));
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body)['results'];
     return jsonResponse.map((data) => new Data.fromJson(data)).toList();
@@ -188,7 +188,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             primary: false,
                             padding:
                                 EdgeInsets.only(top: Constants.spacing / 1.5),
-                            itemCount: data!.length,
+                            itemCount: data.length,
                             itemBuilder: (
                               BuildContext context,
                               int index,

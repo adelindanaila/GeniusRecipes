@@ -1,16 +1,18 @@
-# geniusrecipes
+## About
+Find recipes by any ingredient or cuisine using Spoonacular API.
+*This is a side project, the purpose of this app is to learn and develop Flutter.*
 
-A new Flutter project.
+## Setup
 
-## Getting Started
+Create an .env file with next configuration:
 
-This project is a starting point for a Flutter application.
+    API_URL=Get it from https://spoonacular.com
+    API_KEY=secret
 
-A few resources to get you started if this is your first Flutter project:
+## Todos
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Favorites
+- Search
+- Nutritional Information (the info is in the recipe summary)
+- Recipe steps
+- Load more than 10 recipes per category
