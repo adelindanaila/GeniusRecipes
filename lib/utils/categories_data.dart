@@ -58,7 +58,7 @@ const categoriesList = [
     subtitle: "love",
     preview: "assets/images/categories/previews/dessert.jpg",
     background: "assets/images/categories/backgrounds/dessert.jpg",
-    color: Color.fromRGBO(112, 95, 124, 1),
+    color: Color.fromRGBO(243, 236, 201, 1),
     query: "type=dessert",
     crossAxisCellCount: 2,
     mainAxisCellCount: 2,

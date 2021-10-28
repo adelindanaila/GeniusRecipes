@@ -88,7 +88,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           SliverAppBar(
             pinned: true,
             expandedHeight: kExpandedHeight,
-            backgroundColor: const Color(0xFFd4e3a5),
+            backgroundColor: arguments['color'],
             title: AnimatedOpacity(
               duration: const Duration(milliseconds: 300),
               opacity: _titleOpacity,
